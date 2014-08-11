@@ -170,18 +170,6 @@ cat << CTAG
 						action:"generic /sys/kernel/intelli_plug/nr_run_hysteresis"
 				}},'
 				fi
-				if [ -f "/sys/kernel/intelli_plug/max_cpus_online" ]; then
-				HV=\`$BB cat /sys/kernel/intelli_plug/max_cpus_online\`;
-				$BB echo '{ SSeekBar:{
-						title:"Max Cores Online",
-						description:"Max Number of Cores online.",
-						min:1,
-						max:4,
-						step:1,
-						default:'$HV',
-						action:"generic /sys/kernel/intelli_plug/max_cpus_online"
-				}},'
-				fi
 				if [ -f "/sys/kernel/intelli_plug/min_cpus_online" ]; then
 				HV=\`$BB cat /sys/kernel/intelli_plug/min_cpus_online\`;
 				$BB echo '{ SSeekBar:{
