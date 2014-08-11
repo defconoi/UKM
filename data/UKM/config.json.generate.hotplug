@@ -109,6 +109,159 @@ cat << CTAG
 					$BB echo '}
 				}},'
 			fi`
+			`if  [ -d "/sys/kernel/intelli_plug" ]; then
+				$BB echo '{ SPane:{
+					title:"Neobuddy89 Intelli-Plug 5.0"
+				}},'
+				if [ -f "/sys/kernel/intelli_plug/intelli_plug_active" ]; then
+				INTELLI_PLUG=\`$BB cat /sys/kernel/intelli_plug/intelli_plug_active\`;
+					$BB echo '{ SCheckBox:{
+						label:"Enable",
+						description:"An in kernel replacement for Qualcomms MPDecision. Developed by faux123 & Neobuddy89.",
+						default:'$INTELLI_PLUG',
+						action:"generic /sys/kernel/intelli_plug/intelli_plug_active"
+					}},'
+				fi
+				if [ -f "/sys/kernel/intelli_plug/full_mode_profile" ]; then
+				PL=\`$BB cat /sys/kernel/intelli_plug/full_mode_profile\`;
+				$BB echo '{ SOptionList:{
+						title:"Intelliplug Profile",
+						description:"The number in the parentheses indicates the amount of cores online at any time.",
+						default:'$PL',
+						action:"generic /sys/kernel/intelli_plug/full_mode_profile",
+						values:{
+							0:"Balanced (4)", 1:"Performance (4)", 2:"Conservative (4)", 3:"Disable (2)", 4:"Tri (3?)", 5:"Eco (3)", 6:"Strict (?)"
+						}
+				}},'
+				fi
+				if [ -f "/sys/kernel/intelli_plug/cpus_boosted" ]; then
+				HV=\`$BB cat /sys/kernel/intelli_plug/cpus_boosted\`;
+				$BB echo '{ SSeekBar:{
+						title:"Cores Boosted",
+						description:"Lower = Battery Savings, Higher = performance.",
+						min:1,
+						max:4,
+						step:1,
+						default:'$HV',
+						action:"generic /sys/kernel/intelli_plug/cpus_boosted"
+				}},'
+				fi
+				if [ -f "/sys/kernel/intelli_plug/max_cpus_online" ]; then
+				HV=\`$BB cat /sys/kernel/intelli_plug/max_cpus_online\`;
+				$BB echo '{ SSeekBar:{
+						title:"Max Cores Online",
+						description:"Max Number of Cores online.",
+						min:1,
+						max:4,
+						step:1,
+						default:'$HV',
+						action:"generic /sys/kernel/intelli_plug/max_cpus_online"
+				}},'
+				fi
+				if [ -f "/sys/kernel/intelli_plug/nr_run_hysteresis" ]; then
+				HV=\`$BB cat /sys/kernel/intelli_plug/nr_run_hysteresis\`;
+				$BB echo '{ SSeekBar:{
+						title:"Hysteresis Value",
+						description:"Lower = faster hotplug response (more battery drain).",
+						min:0,
+						max:16,
+						step:1,
+						default:'$HV',
+						action:"generic /sys/kernel/intelli_plug/nr_run_hysteresis"
+				}},'
+				fi
+				if [ -f "/sys/kernel/intelli_plug/max_cpus_online" ]; then
+				HV=\`$BB cat /sys/kernel/intelli_plug/max_cpus_online\`;
+				$BB echo '{ SSeekBar:{
+						title:"Max Cores Online",
+						description:"Max Number of Cores online.",
+						min:1,
+						max:4,
+						step:1,
+						default:'$HV',
+						action:"generic /sys/kernel/intelli_plug/max_cpus_online"
+				}},'
+				fi
+				if [ -f "/sys/kernel/intelli_plug/min_cpus_online" ]; then
+				HV=\`$BB cat /sys/kernel/intelli_plug/min_cpus_online\`;
+				$BB echo '{ SSeekBar:{
+						title:"Min Cores Online",
+						description:"Min Number of Cores online.",
+						min:1,
+						max:4,
+						step:1,
+						default:'$HV',
+						action:"generic /sys/kernel/intelli_plug/min_cpus_online"
+				}},'
+				fi
+				if [ -f "/sys/kernel/intelli_plug/max_cpus_online_susp" ]; then
+				HV=\`$BB cat /sys/kernel/intelli_plug/max_cpus_online_susp\`;
+				$BB echo '{ SSeekBar:{
+						title:"Max Suspend Online Cores",
+						description:"Maximum Cores online while screen off/suspend.",
+						min:1,
+						max:4,
+						step:1,
+						default:'$HV',
+						action:"generic /sys/kernel/intelli_plug/max_cpus_online_susp"
+				}},'
+				fi
+				if [ -f "/sys/kernel/intelli_plug/suspend_defer_time" ]; then
+				RT=\`$BB cat /sys/kernel/intelli_plug/suspend_defer_time\`;
+				$BB echo '{ SSeekBar:{
+						title:"Suspend Defer Time",
+						min:0,
+						max:100000,
+						step:1,
+						default:'$RT',
+						action:"generic /sys/kernel/intelli_plug/suspend_defer_time"
+				}},'
+				fi
+				if [ -f "/sys/kernel/intelli_plug/def_sampling_ms" ]; then
+				RT=\`$BB cat /sys/kernel/intelli_plug/def_sampling_ms\`;
+				$BB echo '{ SSeekBar:{
+						title:"Sampling MS",
+						min:0,
+						max:10000,
+						step:1,
+						default:'$RT',
+						action:"generic /sys/kernel/intelli_plug/def_sampling_ms"
+				}},'
+				fi
+				if [ -f "/sys/kernel/intelli_plug/down_lock_duration" ]; then
+				RT=\`$BB cat /sys/kernel/intelli_plug/down_lock_duration\`;
+				$BB echo '{ SSeekBar:{
+						title:"Downlock Duration",
+						min:0,
+						max:10000,
+						step:1,
+						default:'$RT',
+						action:"generic /sys/kernel/intelli_plug/down_lock_duration"
+				}},'
+				fi
+				if [ -f "/sys/kernel/intelli_plug/cpu_nr_run_threshold" ]; then
+				RT=\`$BB cat /sys/kernel/intelli_plug/cpu_nr_run_threshold\`;
+				$BB echo '{ SSeekBar:{
+						title:"Threshold Value",
+						min:0,
+						max:1000,
+						step:1,
+						default:'$RT',
+						action:"generic /sys/kernel/intelli_plug/cpu_nr_run_threshold"
+				}},'
+				fi
+				if [ -f "/sys/kernel/intelli_plug/screen_off_max" ]; then
+				$BB echo '{ SSeekBar:{
+						title:"CPU Max Screen Off Frequency",
+						description:"Set the maximum frequency the CPU scales up to when the screen is off.",
+						default:0,
+						action:"numeric /sys/kernel/intelli_plug/screen_off_max",
+						values:{ 0:"Disabled", '
+							sh $DEVICE CPUFrequencyList
+					$BB echo '}
+				}},'
+				fi
+			fi`
 			`if [ -f "/sys/module/msm_thermal/parameters/enabled" ] && [ -f "/sys/module/msm_thermal/parameters/core_limit_temp_degC" ]; then
 			THERMAL=\`bool /sys/module/msm_thermal/parameters/enabled\`;
 				$BB echo '{ SCheckBox:{
